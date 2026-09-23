@@ -1,20 +1,23 @@
 {{ template "header.html" .}}
 
 <script type="text/javascript">
-  var host = location.protocol + '//' + window.location.host
-  var urlParams = new URLSearchParams(window.location.search);
-  var code = urlParams.get('code');
-  // Where to go after logging in; validated server-side to a same-site path.
-  var next = {{ .next }};
+  // jQuery is deferred, so $ only exists once parsing is done. Every deferred
+  // script has run by the time DOMContentLoaded fires, which also makes the
+  // old $(function () { ... }) wrapper redundant.
+  document.addEventListener("DOMContentLoaded", function () {
+    var host = location.protocol + '//' + window.location.host
+    var urlParams = new URLSearchParams(window.location.search);
+    var code = urlParams.get('code');
+    // Where to go after logging in; validated server-side to a same-site path.
+    var next = {{ .next }};
 
-  if (code) {
-    var post = $.post(host + "/api/login", {"code": code});
-    post.done(function(data) {
-      window.location.href = next;
-    });
-  }
+    if (code) {
+      var post = $.post(host + "/api/login", {"code": code});
+      post.done(function(data) {
+        window.location.href = next;
+      });
+    }
 
-  $(function () {
     var emailForm = $("#email-form"), codeForm = $("#code-form"),
         status = $("#email-login-status"), change = $("#email-change");
     if (!emailForm.length) { return; }
@@ -55,7 +58,11 @@
       <i class="fab fa-github fa-lg"></i> Continue with GitHub
     </a>
 
-    <script>$("#github-button").prop("href", "https://github.com/login/oauth/authorize?client_id={{ .client_id }}&redirect_uri=" + window.location);</script>
+    <script>
+      // The anchor above has already been parsed when this runs, so the link is
+      // never briefly inert, and setting .href needs no library at all.
+      document.getElementById("github-button").href = "https://github.com/login/oauth/authorize?client_id={{ .client_id }}&redirect_uri=" + window.location;
+    </script>
 
     {{ if .email_login_enabled }}
     <p style="color: #64748b; font-size: 13px; margin: 24px 0 10px;">or sign in with email</p>

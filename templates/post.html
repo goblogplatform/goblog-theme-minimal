@@ -113,7 +113,9 @@
     var converter = new showdown.Converter({tables: true});
     var md = "{{ .post.Content }}";
     var html = DOMPurify.sanitize(converter.makeHtml(md));
-    $("#html").html(html)
+    // jQuery comes from the shared head and is deferred; converter stays a
+    // parse-time global because the comment loop below reads it.
+    document.addEventListener("DOMContentLoaded", function () { $("#html").html(html); });
   </script>
   <noscript>
     <div class="container">
