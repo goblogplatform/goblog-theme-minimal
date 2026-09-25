@@ -4,6 +4,6 @@
   "description": "Sans-serif, plenty of whitespace and a single blue accent — goblog's minimal theme.",
   "author": "Jason Ernst",
   "license": "Apache-2.0",
-  "min_goblog_version": "0.7.0",
+  "min_goblog_version": "0.12.0",
   "homepage": "https://github.com/goblogplatform/goblog-theme-minimal"
 }
