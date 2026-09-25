@@ -5,19 +5,8 @@
   // script has run by the time DOMContentLoaded fires, which also makes the
   // old $(function () { ... }) wrapper redundant.
   document.addEventListener("DOMContentLoaded", function () {
-    var host = location.protocol + '//' + window.location.host
-    var urlParams = new URLSearchParams(window.location.search);
-    var code = urlParams.get('code');
     // Where to go after logging in; validated server-side to a same-site path.
     var next = {{ .next }};
-
-    if (code) {
-      var post = $.post(host + "/api/login", {"code": code});
-      post.done(function(data) {
-        window.location.href = next;
-      });
-    }
-
     var emailForm = $("#email-form"), codeForm = $("#code-form"),
         status = $("#email-login-status"), change = $("#email-change");
     if (!emailForm.length) { return; }
@@ -27,7 +16,7 @@
     emailForm.on("submit", function (e) {
       e.preventDefault();
       status.text("");
-      $.post(host + "/api/login/email", {email: $("#email-input").val()})
+      $.post("/api/login/email", {email: $("#email-input").val()})
         .done(function () {
           emailForm.hide(); codeForm.css("display", "flex"); change.show();
           status.text("Check your inbox for a 6-digit code.");
@@ -38,7 +27,7 @@
     codeForm.on("submit", function (e) {
       e.preventDefault();
       status.text("");
-      $.post(host + "/api/login/email/verify", {email: $("#email-input").val(), code: $("#code-input").val()})
+      $.post("/api/login/email/verify", {email: $("#email-input").val(), code: $("#code-input").val()})
         .done(function () { window.location.href = next; })
         .fail(function (xhr) { showError(xhr, "Could not verify the code."); });
     });
@@ -54,15 +43,9 @@
     <h2 style="font-weight: 600; margin-bottom: 8px;">Sign In</h2>
     <p style="color: #64748b; font-size: 14px; margin-bottom: 30px;">Log in to manage {{ .settings.site_title.Value }}</p>
 
-    <a id="github-button" href="" style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 24px; background: #24292e; color: #fff; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500;">
+    <a id="github-button" href="{{ .github_login_url }}" style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 24px; background: #24292e; color: #fff; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500;">
       <i class="fab fa-github fa-lg"></i> Continue with GitHub
     </a>
-
-    <script>
-      // The anchor above has already been parsed when this runs, so the link is
-      // never briefly inert, and setting .href needs no library at all.
-      document.getElementById("github-button").href = "https://github.com/login/oauth/authorize?client_id={{ .client_id }}&redirect_uri=" + window.location;
-    </script>
 
     {{ if .email_login_enabled }}
     <p style="color: #64748b; font-size: 13px; margin: 24px 0 10px;">or sign in with email</p>
