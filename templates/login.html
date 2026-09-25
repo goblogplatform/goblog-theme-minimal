@@ -43,7 +43,7 @@
     <h2 style="font-weight: 600; margin-bottom: 8px;">Sign In</h2>
     <p style="color: #64748b; font-size: 14px; margin-bottom: 30px;">Log in to manage {{ .settings.site_title.Value }}</p>
 
-    <a id="github-button" href="/login/github{{ if .next }}{{ if ne .next "/" }}?next={{ .next | urlquery }}{{ end }}{{ end }}" style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 24px; background: #24292e; color: #fff; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500;">
+    <a id="github-button" href="{{ .github_login_url }}" style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 24px; background: #24292e; color: #fff; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500;">
       <i class="fab fa-github fa-lg"></i> Continue with GitHub
     </a>
 
