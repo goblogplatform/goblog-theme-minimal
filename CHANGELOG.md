@@ -1,3 +1,8 @@
+## 1.3.0
+
+- The login page offers goblog's password form (the shared `_password_login` partial) when the site has a password account, under the GitHub button. Until now a site with both GitHub login and a password admin showed only GitHub on this theme (goblog #666).
+- **Requires goblog 0.14.0**, the first release with password login and the partial.
+
 ## 1.2.0
 
 - The footer's "Powered by goblog" line comes from goblog's shared `_powered_by` partial instead of being written out in the theme. It now links to [goblog.live](https://www.goblog.live) rather than the GitHub repository, and a site can hide it with the **Show "Powered by goblog"** setting under Admin → Settings → Appearance (goblog #644).
