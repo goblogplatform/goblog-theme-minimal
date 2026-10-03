@@ -1,3 +1,8 @@
+## 1.2.0
+
+- The footer's "Powered by goblog" line comes from goblog's shared `_powered_by` partial instead of being written out in the theme. It now links to [goblog.live](https://www.goblog.live) rather than the GitHub repository, and a site can hide it with the **Show "Powered by goblog"** setting under Admin → Settings → Appearance (goblog #644).
+- **Requires goblog 0.13.0**, the first release with the partial; on anything older the theme's `footer.html` references a template that does not exist.
+
 ## 1.1.0
 
 - Signing in with GitHub is goblog's job now. The button is a plain link to `/login/github`; the theme no longer assembles the authorize URL in an inline script, where `window.location` went into `redirect_uri` unescaped, nor handles the `?code=` that came back. goblog completes the exchange server-side against a `state` it minted, so a code obtained for one account can no longer be replayed into another visitor's browser (goblog #631, #637).
