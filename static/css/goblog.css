@@ -91,3 +91,7 @@ video {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* The "Powered by goblog" credit is goblog's shared _powered_by partial; its
+   link takes the colour of the footer line around it. */
+.powered-by a { color: inherit; }

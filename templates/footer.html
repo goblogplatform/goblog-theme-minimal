@@ -6,7 +6,7 @@
           <p style="font-weight: 600; font-size: 14px; margin-bottom: 8px; color: #333;">{{ .settings.site_title.Value }}</p>
           {{ with .plugin_footer_html }}{{ . | rawHTML }}{{ end }}
         </div>
-        <p style="color: #94a3b8; font-size: 11px; margin: 0;">Powered by <a href="https://github.com/goblogplatform/goblog" style="color: #94a3b8;">goblog {{ .version }}</a></p>
+        <p style="color: #94a3b8; font-size: 11px; margin: 0;">{{ template "_powered_by" . }}</p>
       </div>
     </div>
   </div>
