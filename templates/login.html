@@ -47,6 +47,11 @@
       <i class="fab fa-github fa-lg"></i> Continue with GitHub
     </a>
 
+    {{ if .password_login_enabled }}
+    <p style="color: #64748b; font-size: 13px; margin: 24px 0 10px;">or sign in with a password</p>
+    {{ template "_password_login" . }}
+    {{ end }}
+
     {{ if .email_login_enabled }}
     <p style="color: #64748b; font-size: 13px; margin: 24px 0 10px;">or sign in with email</p>
     <form id="email-form" style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
